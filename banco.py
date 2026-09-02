@@ -26,6 +26,8 @@ def create_cockmon():
     cockExp = 0
     cockLvl = int(input("|-> Qual é o nível inicial de seu CoclMon?: "))
 
+
+
     connection = connect();
     cursor = connection.cursor()
 
@@ -42,6 +44,11 @@ def create_cockmon():
     connection.commit();
     connection.close();
     print("--- COCKMON CRIADO COM SUCESSO!! ---")
+
+def  view_cockmon():
+    connection = connect();
+    cursor = connection.cursor();
+    
     
 
 
