@@ -93,7 +93,7 @@ def show_system():
         print("| Informe oque deseja fazer...")
         print("| [1] - Listar CockMon existentes;")
         print("| [2] - Criar/Registrar CockMon;")
-        # CRIAR FUNÇÃO P/ APAGAR COCKMON
+        # CRIAR FUNÇÃO P/ APAGAR e alterar COCKMON
         print("| [3] - Apagar CockMon (em Desenvolvimento);")
         print("| [4] - Alterar registro CockMon;")
         print("| [0] - Sair...")
@@ -113,6 +113,7 @@ def show_system():
 
         elif answer == "0":
             print("Encerrando Programa...")
+            time.sleep(1)
             running = False
         else:
             print("Valor inválido... Informe um valor dentro da lista de funções.")
