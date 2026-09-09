@@ -80,6 +80,31 @@ def  view_cockmon():
 
     connection.close();
 
+def delete_Cockmon():
+    connection = connect();
+    cursor = connection.cursor();
+
+    print("|-> Digite o Cockmon que queres que sejá apagado.")
+    print("| -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
+    dlt_answer = input("|-> ")
+
+    cursor.execute('''
+                    DELETE from cockmon WHERE ID = ?
+            ''', (dlt_answer,))
+    cursor.execute('''
+                    DELETE FROM sqlite_sequence WHERE name = 'cockmon';
+            ''')
+
+    if cursor.rowcount > 0:
+        print(f" -- COCKMON APAGADO COM SUCESSO!!! (ID = {dlt_answer}) --")
+    else:
+        print("Nenhum CockMon encontrado :( ")
+
+    connection.commit();
+    connection.close();
+
+
+    
     
 # Função para criar um "Sistema" no terminal
 def show_system():
@@ -93,9 +118,8 @@ def show_system():
         print("| Informe oque deseja fazer...")
         print("| [1] - Listar CockMon existentes;")
         print("| [2] - Criar/Registrar CockMon;")
-        # CRIAR FUNÇÃO P/ APAGAR e alterar COCKMON
-        print("| [3] - Apagar CockMon (em Desenvolvimento);")
-        print("| [4] - Alterar registro CockMon;")
+        print("| [3] - Apagar CockMon;")
+        print("| [4] - Alterar registro CockMon (em Desenvolvimento);")
         print("| [0] - Sair...")
         print("| -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
         answer = str(input("| -> "));
@@ -105,7 +129,7 @@ def show_system():
         elif answer == "2":
             create_cockmon();
         elif answer == "3":
-            print(">> Função de Apagar CockMon em desenvolvimento (eliminar DEV) <<")
+            delete_Cockmon();
             time.sleep(2)
         elif answer == "4":
             print(">> Função de alterar CockMon em desenvolvimento (eliminar DEV) <<")
