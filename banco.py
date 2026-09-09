@@ -1,4 +1,5 @@
 import sqlite3
+import time
 
 def connect():
     return sqlite3.connect('cockmon.db')
@@ -10,6 +11,7 @@ def create_table():
 
     cursor.execute('''
             CREATE TABLE IF NOT EXISTS cockmon(
+                   id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
                    nome TEXT NOT NULL,
                    tipo TEXT NOT NULL,
                    vida INTEGER NOT NULL,
@@ -20,11 +22,12 @@ def create_table():
     connection.close()
 
 def create_cockmon():
-    cockName = str(input("|-> Cual o nome de seu CockMon?: "))
-    cockType = str(input("|-> Cual o tipo do seu CockMon?: "))
-    cockLife = int(input("|-> Cuanto de vida tem o seu CockMon?: "))
+    time.sleep(1)
+    cockName = str(input("|-> Qual o nome de seu CockMon?: "))
+    cockType = str(input("|-> Qual o tipo do seu CockMon?: "))
+    cockLife = int(input("|-> Quanto de vida tem o seu CockMon?: "))
     cockExp = 0
-    cockLvl = int(input("|-> Qual é o nível inicial de seu CoclMon?: "))
+    cockLvl = int(input("|-> Qual é o nível inicial de seu CockMon?: "))
 
 
 
@@ -43,14 +46,78 @@ def create_cockmon():
 
     connection.commit();
     connection.close();
+    time.sleep(0.5)
     print("--- COCKMON CRIADO COM SUCESSO!! ---")
 
+
+# Função destinada à listar todos os cockmon registrados
 def  view_cockmon():
     connection = connect();
     cursor = connection.cursor();
-    
-    
 
+    cursor.execute("""
+                Select * from cockmon
+
+            """)
+
+    cock_info = cursor.fetchall();
+
+    # Verificação para caso não haja retorno de dados
+    if cock_info:
+
+        # laço for para cada cockmon
+        for cocks in cock_info:
+            time.sleep(0.5)
+            print(f"| ID : {cocks[0]}")
+            print(f"| Nome : {cocks[1]}")
+            print(f"| Tipo : {cocks[2]}")
+            print(f"| Vida : {cocks[3]}")
+            print(f"| Exp : {cocks[4]}")
+            print(f"| Nível : {cocks[5]}")
+            print("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
+    else:
+        print("Nenhum CockMon encontrado :( ")
+
+    connection.close();
+
+    
+# Função para criar um "Sistema" no terminal
+def show_system():
+    running = True
+
+    while running:
+        time.sleep(1)
+        print("x-------------------------------------x")
+        print("| - BEM VINDO AO TERMINAL COCKMON! -")
+        print("|")
+        print("| Informe oque deseja fazer...")
+        print("| [1] - Listar CockMon existentes;")
+        print("| [2] - Criar/Registrar CockMon;")
+        # CRIAR FUNÇÃO P/ APAGAR e alterar COCKMON
+        print("| [3] - Apagar CockMon (em Desenvolvimento);")
+        print("| [4] - Alterar registro CockMon;")
+        print("| [0] - Sair...")
+        print("| -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
+        answer = str(input("| -> "));
+
+        if answer == "1":
+            view_cockmon();
+        elif answer == "2":
+            create_cockmon();
+        elif answer == "3":
+            print(">> Função de Apagar CockMon em desenvolvimento (eliminar DEV) <<")
+            time.sleep(2)
+        elif answer == "4":
+            print(">> Função de alterar CockMon em desenvolvimento (eliminar DEV) <<")
+            time.sleep(2)
+
+        elif answer == "0":
+            print("Encerrando Programa...")
+            time.sleep(1)
+            running = False
+        else:
+            print("Valor inválido... Informe um valor dentro da lista de funções.")
+            time.sleep(2)
 
 create_table();
-create_cockmon();
+show_system();
