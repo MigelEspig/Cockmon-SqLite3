@@ -84,16 +84,35 @@ def delete_Cockmon():
     connection = connect();
     cursor = connection.cursor();
 
-    print("|-> Digite o Cockmon que queres que sejá apagado.")
-    print("| -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
-    dlt_answer = input("|-> ")
+    cursor.execute('''
+                    SELECT id, nome FROM cockmon
+            ''')
+    cock_info = cursor.fetchall();
+
+    if cock_info:
+
+        print("|-> OPÇÕES DISPONÍVEIS PARA DELEÇÃO:\n")
+        print("| -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
+
+        # laço for para cada cockmon
+        for cocks in cock_info:
+            time.sleep(0.5)
+            print(f"| ID : {cocks[0]}")
+            print(f"| Nome : {cocks[1]}")
+            print("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
+
+        print("|-> Digite o Cockmon que queres que sejá apagado.")
+        print("| -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-")
+        dlt_answer = input("|-> ")
+
+        # if dlt_answer == 0 
+
+    else:
+        print("Nenhum CockMon encontrado :( ")
 
     cursor.execute('''
                     DELETE from cockmon WHERE ID = ?
             ''', (dlt_answer,))
-    cursor.execute('''
-                    DELETE FROM sqlite_sequence WHERE name = 'cockmon';
-            ''')
 
     if cursor.rowcount > 0:
         print(f" -- COCKMON APAGADO COM SUCESSO!!! (ID = {dlt_answer}) --")
